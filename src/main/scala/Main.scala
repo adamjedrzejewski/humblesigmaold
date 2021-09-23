@@ -1,5 +1,5 @@
 import humblesigma.EventDispatcher
-import humblesigma.commands._
+import humblesigma.actions._
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.utils.cache.CacheFlag
@@ -16,27 +16,22 @@ object Main {
       new PingAction(),
       new HelpAction(),
       new EchoAction(),
-      new PlayAction()
+      new PlayAction(),
+      new JoinAction(),
+      new LeaveAction()
     )
 
-    commands.flatMap({ cmd => cmd.names.map({ name => (name, cmd) }) }).toMap
-    //    val ping = new PingCommand()
-    //    val help = new HelpCommand()
-    //    val echo = new EchoCommand()
-    //    val play = new PlayCommand()
-    //
-    //    Map(
-    //      (ping.command, ping),
-    //      (help.command, help),
-    //      (echo.command, echo),
-    //      (play.command, play),
-    //      ("leave", play)
-    //    )
+    commands.flatMap { cmd =>
+      cmd.names.map { name =>
+        (name, cmd)
+      }
+    }.toMap
   }
 
   // TODO: config file
   def main(args: Array[String]): Unit = {
     val tokenFile = "token.txt"
+
     readToken(tokenFile) match {
       case Failure(s) =>
         println(s"Failed to read token file: ${s.getMessage}")

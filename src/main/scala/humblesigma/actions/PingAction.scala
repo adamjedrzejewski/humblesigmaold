@@ -1,6 +1,5 @@
-package humblesigma.commands
+package humblesigma.actions
 
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 
 class PingAction extends BotAction {
