@@ -1,3 +1,5 @@
+import humblesigma.EventDispatcher
+import humblesigma.commands.{BotCommand, PingCommand}
 import net.dv8tion.jda.api.JDABuilder
 
 import scala.io.Source
@@ -6,6 +8,7 @@ import scala.util.{Failure, Success, Try, Using}
 
 object Main {
 
+  // TODO: config file
   def main(args: Array[String]): Unit = {
     val tokenFile = "token.txt"
     readToken(tokenFile) match {
@@ -21,7 +24,7 @@ object Main {
   }
 
   def login(jdaBuilder: JDABuilder): Unit = {
-    val jda = jdaBuilder.build().awaitReady()
+    jdaBuilder.build().awaitReady()
   }
 
   def getBuilder(token: String): JDABuilder = {
@@ -36,9 +39,16 @@ object Main {
     builder.setChunkingFilter(ChunkingFilter.NONE)
     builder.setBulkDeleteSplittingEnabled(false)
     builder.setActivity(Activity.listening("Nightshift TV - D r i v e F o r e v e r"))
-    builder.addEventListeners(new EventDispatcher())
+    builder.addEventListeners(new EventDispatcher("::", commands))
 
     builder
+  }
+
+  val commands: Map[String, BotCommand] = {
+    val ping = new PingCommand()
+    Map(
+      (ping.command, ping)
+    )
   }
 
   def readToken(tokenFile: String): Try[String] = Using(Source.fromFile(tokenFile)) { source => source.getLines().mkString }
