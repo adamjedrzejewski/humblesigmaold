@@ -14,9 +14,14 @@ object Main {
         System.exit(1)
       case Success(token) =>
         val jdaBuilder = getBuilder(token)
-        jdaBuilder.build().awaitReady()
-        println(token)
+        login(jdaBuilder)
+
     }
+  }
+
+  def login(jdaBuilder: JDABuilder) = {
+    val jda = jdaBuilder.build().awaitReady()
+    //jda.upsertCommand("ping", "Calculate ping of the bot").queue()
   }
 
   def getBuilder(token: String): JDABuilder = {
@@ -31,6 +36,7 @@ object Main {
     builder.setChunkingFilter(ChunkingFilter.NONE)
     builder.setBulkDeleteSplittingEnabled(false)
     builder.setActivity(Activity.listening("Nightshift TV - D r i v e F o r e v e r"))
+    builder.addEventListeners(new BotTest())
 
     builder
   }
