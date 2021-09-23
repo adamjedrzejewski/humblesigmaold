@@ -1,0 +1,21 @@
+plugins {
+    id 'scala'
+    id 'application'
+}
+
+apply plugin: "idea"
+group 'org.humblesigma'
+version '1.0-SNAPSHOT'
+mainClassName = "Main"
+
+repositories {
+    mavenCentral()
+    maven {
+        name 'm2-dv8tion'
+        url 'https://m2.dv8tion.net/releases'
+    }
+}
+
+dependencies {
+    implementation 'org.scala-lang:scala-library:2.13.6'
+}
