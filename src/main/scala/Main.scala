@@ -12,6 +12,7 @@ object Main {
       case Failure(s) =>
         println(s"Failed to read token file: ${s.getMessage}")
         System.exit(1)
+
       case Success(token) =>
         val jdaBuilder = getBuilder(token)
         login(jdaBuilder)
@@ -19,9 +20,8 @@ object Main {
     }
   }
 
-  def login(jdaBuilder: JDABuilder) = {
+  def login(jdaBuilder: JDABuilder): Unit = {
     val jda = jdaBuilder.build().awaitReady()
-    //jda.upsertCommand("ping", "Calculate ping of the bot").queue()
   }
 
   def getBuilder(token: String): JDABuilder = {
@@ -36,10 +36,11 @@ object Main {
     builder.setChunkingFilter(ChunkingFilter.NONE)
     builder.setBulkDeleteSplittingEnabled(false)
     builder.setActivity(Activity.listening("Nightshift TV - D r i v e F o r e v e r"))
-    builder.addEventListeners(new BotTest())
+    builder.addEventListeners(new EventDispatcher())
 
     builder
   }
 
   def readToken(tokenFile: String): Try[String] = Using(Source.fromFile(tokenFile)) { source => source.getLines().mkString }
+
 }
