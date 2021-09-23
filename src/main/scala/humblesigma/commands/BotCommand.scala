@@ -1,9 +1,14 @@
 package humblesigma.commands
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 
 trait BotCommand {
-  val command: String
+
   // val names: List[String]
-  def handle(event: MessageReceivedEvent, command: String, args: Option[String]): Unit
+  // val help: String
+  val command: String
+
+  def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit
+
 }

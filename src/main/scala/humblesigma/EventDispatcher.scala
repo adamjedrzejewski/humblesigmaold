@@ -2,18 +2,19 @@ package humblesigma
 
 import humblesigma.commands.BotCommand
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 
 class EventDispatcher(prompt: String, commands: Map[String, BotCommand]) extends ListenerAdapter {
 
-  override def onMessageReceived(event: MessageReceivedEvent): Unit = {
+  override def onGuildMessageReceived(event: GuildMessageReceivedEvent): Unit = {
     handleCommands(event)
   }
 
   // TODO: add slash commands
   // override def onSlashCommand(event: SlashCommandEvent): Unit = { }
 
-  def handleCommands(event: MessageReceivedEvent): Unit = {
+  def handleCommands(event: GuildMessageReceivedEvent): Unit = {
     val messageAuthor = event.getAuthor
     val botUser = event.getJDA.getSelfUser
 
@@ -43,6 +44,10 @@ class EventDispatcher(prompt: String, commands: Map[String, BotCommand]) extends
       case _ => None
     }
     (command, args)
+  }
+
+  def printHelp(event: MessageReceivedEvent): Unit = {
+
   }
 
 }

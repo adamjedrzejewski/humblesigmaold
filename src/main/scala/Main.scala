@@ -40,20 +40,20 @@ object Main {
     builder.setBulkDeleteSplittingEnabled(false)
     builder.setActivity(Activity.listening("Nightshift TV - D r i v e F o r e v e r"))
     builder.addEventListeners(new EventDispatcher("::", commands))
+    builder.enableCache(CacheFlag.VOICE_STATE)
 
     builder
   }
 
   val commands: Map[String, BotCommand] = {
-    /*
-    val commandsMap = new HashMap()
-    val commands = List()
-    for names in commands {
-      for name in command.names {
-        commandsMap.add(name, command)
-      }
-    }
-     */
+//    val commands = List()
+//    val commandsMap = new HashMap()
+//    for (command <- commands) {
+//      for (name <- command.names) {
+//        commandsMap.add(name, command)
+//      }
+//    }
+
     val ping = new PingCommand()
     val help = new HelpCommand()
     val echo = new EchoCommand()
@@ -63,7 +63,8 @@ object Main {
       (ping.command, ping),
       (help.command, help),
       (echo.command, echo),
-      (play.command, play)
+      (play.command, play),
+      ("leave", play)
     )
   }
 
