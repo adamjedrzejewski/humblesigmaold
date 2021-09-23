@@ -10,9 +10,18 @@ class EventDispatcher(prompt: String, commands: Map[String, BotCommand]) extends
     handleCommands(event)
   }
 
+  // TODO: add slash commands
   // override def onSlashCommand(event: SlashCommandEvent): Unit = { }
 
   def handleCommands(event: MessageReceivedEvent): Unit = {
+    val messageAuthor = event.getAuthor
+    val botUser = event.getJDA.getSelfUser
+
+    // ignore yourself and bots
+    if (botUser.equals(messageAuthor) || messageAuthor.isSystem || messageAuthor.isBot) {
+      return
+    }
+
     val rawMessage = event.getMessage.getContentRaw
     if (!rawMessage.startsWith(prompt)) {
       return

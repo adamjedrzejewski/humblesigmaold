@@ -9,8 +9,9 @@ class EchoCommand extends BotCommand {
   override def handle(event: MessageReceivedEvent, command: String, args: Option[String]): Unit = {
     val message = args match {
       case Some(x) => x
-      case None => ""
+      case None => return
     }
+
     event.getChannel.sendMessage(message).queue()
   }
 
