@@ -1,12 +1,38 @@
 import humblesigma.EventDispatcher
-import humblesigma.commands.{BotCommand, EchoCommand, HelpCommand, PingCommand, PlayCommand}
+import humblesigma.commands._
 import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.entities.Activity
+import net.dv8tion.jda.api.utils.cache.CacheFlag
+import net.dv8tion.jda.api.utils.{ChunkingFilter, MemberCachePolicy}
 
 import scala.io.Source
 import scala.util.{Failure, Success, Try, Using}
 
 
 object Main {
+
+  val commands: Map[String, BotAction] = {
+    val commands = List(
+      new PingAction(),
+      new HelpAction(),
+      new EchoAction(),
+      new PlayAction()
+    )
+
+    commands.flatMap({ cmd => cmd.names.map({ name => (name, cmd) }) }).toMap
+    //    val ping = new PingCommand()
+    //    val help = new HelpCommand()
+    //    val echo = new EchoCommand()
+    //    val play = new PlayCommand()
+    //
+    //    Map(
+    //      (ping.command, ping),
+    //      (help.command, help),
+    //      (echo.command, echo),
+    //      (play.command, play),
+    //      ("leave", play)
+    //    )
+  }
 
   // TODO: config file
   def main(args: Array[String]): Unit = {
@@ -27,46 +53,15 @@ object Main {
     jdaBuilder.build().awaitReady()
   }
 
-  def getBuilder(token: String): JDABuilder = {
-    import net.dv8tion.jda.api.entities.Activity
-    import net.dv8tion.jda.api.utils.cache.CacheFlag
-    import net.dv8tion.jda.api.utils.{ChunkingFilter, MemberCachePolicy}
-
-    val builder = JDABuilder.createDefault(token)
-
-    builder.disableCache(CacheFlag.ACTIVITY)
-    builder.setMemberCachePolicy(MemberCachePolicy.VOICE.or(MemberCachePolicy.OWNER))
-    builder.setChunkingFilter(ChunkingFilter.NONE)
-    builder.setBulkDeleteSplittingEnabled(false)
-    builder.setActivity(Activity.listening("Nightshift TV - D r i v e F o r e v e r"))
-    builder.addEventListeners(new EventDispatcher("::", commands))
-    builder.enableCache(CacheFlag.VOICE_STATE)
-
-    builder
-  }
-
-  val commands: Map[String, BotCommand] = {
-//    val commands = List()
-//    val commandsMap = new HashMap()
-//    for (command <- commands) {
-//      for (name <- command.names) {
-//        commandsMap.add(name, command)
-//      }
-//    }
-
-    val ping = new PingCommand()
-    val help = new HelpCommand()
-    val echo = new EchoCommand()
-    val play = new PlayCommand()
-
-    Map(
-      (ping.command, ping),
-      (help.command, help),
-      (echo.command, echo),
-      (play.command, play),
-      ("leave", play)
-    )
-  }
+  def getBuilder(token: String): JDABuilder =
+    JDABuilder.createDefault(token)
+      .disableCache(CacheFlag.ACTIVITY)
+      .enableCache(CacheFlag.VOICE_STATE)
+      .setMemberCachePolicy(MemberCachePolicy.VOICE.or(MemberCachePolicy.OWNER))
+      .setChunkingFilter(ChunkingFilter.NONE)
+      .setBulkDeleteSplittingEnabled(false)
+      .setActivity(Activity.listening("Nightshift TV - D r i v e F o r e v e r"))
+      .addEventListeners(new EventDispatcher("::", commands))
 
   def readToken(tokenFile: String): Try[String] = Using(Source.fromFile(tokenFile)) { source => source.getLines().mkString }
 

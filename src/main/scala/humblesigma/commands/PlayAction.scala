@@ -7,8 +7,8 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 import java.nio.ByteBuffer
 import java.util.concurrent.ConcurrentLinkedQueue
 
-class PlayCommand extends BotCommand {
-  override val command: String = "play"
+class PlayAction extends BotAction {
+  override val names = List("play")
 
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {
     command match {

@@ -3,12 +3,17 @@ package humblesigma.commands
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 
-class PingCommand extends BotCommand {
+class EchoAction extends BotAction {
 
-  override final val command = "ping"
+  override final val names = List("echo")
 
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {
-    event.getChannel.sendMessage("Pong").queue()
+    val message = args match {
+      case Some(x) => x
+      case None => return
+    }
+
+    event.getChannel.sendMessage(message).queue()
   }
 
 }
