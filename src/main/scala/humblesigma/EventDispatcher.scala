@@ -18,13 +18,22 @@ class EventDispatcher(prompt: String, commands: Map[String, BotCommand]) extends
       return
     }
 
-    // TODO: get command and arguments
-    // command, args = parseCommand(rawMessage)
-    val command = rawMessage.substring(2).toLowerCase()
-    commands.get(command) match {
-      case Some(cmd) => cmd.handle(event)
+    val rawCommand = rawMessage.substring(2)
+    val (command, args) = parseCommand(rawCommand)
+    commands.get(command.toLowerCase()) match {
+      case Some(cmd) => cmd.handle(event, command, args)
       case None => ()
     }
+  }
+
+  def parseCommand(rawCommand: String): (String, Option[String]) = {
+    val elems = rawCommand.split(" ", 2)
+    val command = elems(0)
+    val args = elems.size match {
+      case 2 => Some(elems(1))
+      case _ => None
+    }
+    (command, args)
   }
 
 }

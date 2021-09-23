@@ -1,5 +1,5 @@
 import humblesigma.EventDispatcher
-import humblesigma.commands.{BotCommand, PingCommand}
+import humblesigma.commands.{BotCommand, EchoCommand, HelpCommand, PingCommand}
 import net.dv8tion.jda.api.JDABuilder
 
 import scala.io.Source
@@ -46,8 +46,13 @@ object Main {
 
   val commands: Map[String, BotCommand] = {
     val ping = new PingCommand()
+    val help = new HelpCommand()
+    val echo = new EchoCommand()
+
     Map(
-      (ping.command, ping)
+      (ping.command, ping),
+      (help.command, help),
+      (echo.command, echo)
     )
   }
 
