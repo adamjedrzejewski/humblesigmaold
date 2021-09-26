@@ -1,4 +1,5 @@
-import humblesigma.EventDispatcher
+import Main.commands
+import humblesigma.{Configuration, EventDispatcher}
 import humblesigma.actions._
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
@@ -13,14 +14,15 @@ import scala.util.{Failure, Success, Try, Using}
 
 object Main {
 
-  val commands: Map[String, BotAction] = {
+  def commands(configuration: Configuration): Map[String, BotAction] = {
     val commands = List(
       new PingAction(),
       new HelpAction(),
       new EchoAction(),
       new PlayAction(),
       new JoinAction(),
-      new LeaveAction()
+      new LeaveAction(),
+      new ShutdownAction(configuration)
     )
 
     commands.flatMap { cmd =>
@@ -39,7 +41,8 @@ object Main {
         System.exit(1)
 
       case Success(configuration) =>
-        val jdaBuilder = getBuilder(configuration)
+        val cmds = commands(configuration)
+        val jdaBuilder = getBuilder(configuration, cmds)
         login(jdaBuilder)
     }
 
@@ -56,7 +59,7 @@ object Main {
     jdaBuilder.build().awaitReady()
   }
 
-  def getBuilder(configuration: Configuration): JDABuilder = {
+  def getBuilder(configuration: Configuration, commands: Map[String, BotAction]): JDABuilder = {
     JDABuilder.createDefault(configuration.token)
       .disableCache(CacheFlag.ACTIVITY)
       .enableCache(CacheFlag.VOICE_STATE)
