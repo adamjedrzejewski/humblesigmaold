@@ -1,8 +1,9 @@
 package humblesigma.actions
 
+import humblesigma.Command
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 
-class EchoAction extends BotAction {
+class EchoAction extends Action with Command {
 
   override final val names = List("echo")
 

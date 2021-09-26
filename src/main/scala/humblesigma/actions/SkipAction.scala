@@ -1,8 +1,9 @@
 package humblesigma.actions
+import humblesigma.Command
 import humblesigma.utility.VoiceUtility
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 
-class SkipAction extends BotAction {
+class SkipAction extends Action with Command {
   override val names: List[String] = List("skip", "s")
 
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {

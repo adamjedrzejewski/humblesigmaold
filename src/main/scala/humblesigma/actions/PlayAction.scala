@@ -1,5 +1,6 @@
 package humblesigma.actions
 
+import humblesigma.Command
 import humblesigma.utility.VoiceUtility
 import net.dv8tion.jda.api.audio.{AudioReceiveHandler, AudioSendHandler, CombinedAudio}
 import net.dv8tion.jda.api.entities.{Member, VoiceChannel}
@@ -8,7 +9,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 import java.nio.ByteBuffer
 import java.util.concurrent.ConcurrentLinkedQueue
 
-class PlayAction extends BotAction {
+class PlayAction extends Action with Command {
   override val names = List("play", "p")
 
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {

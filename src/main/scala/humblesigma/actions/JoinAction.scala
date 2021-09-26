@@ -1,8 +1,10 @@
 package humblesigma.actions
+
+import humblesigma.Command
 import humblesigma.utility.VoiceUtility
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 
-class JoinAction extends BotAction {
+class JoinAction extends Action with Command {
   override val names: List[String] = List("join")
 
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {

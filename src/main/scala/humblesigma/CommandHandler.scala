@@ -1,11 +1,11 @@
 package humblesigma
 
-import humblesigma.actions.BotAction
+import humblesigma.actions.Action
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 
-class EventDispatcher(prompt: String, commands: Map[String, BotAction]) extends ListenerAdapter {
+class CommandHandler(prompt: String, commands: Map[String, Action]) extends ListenerAdapter {
 
   override def onGuildMessageReceived(event: GuildMessageReceivedEvent): Unit = {
     handleCommands(event)
