@@ -1,4 +1,4 @@
-package humblesigma.utility
+package humblesigma.voice
 
 import net.dv8tion.jda.api.entities.{Guild, Member, TextChannel, VoiceChannel}
 

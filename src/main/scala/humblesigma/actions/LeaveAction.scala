@@ -1,7 +1,7 @@
 package humblesigma.actions
 
 import humblesigma.Command
-import humblesigma.utility.VoiceUtility
+import humblesigma.voice.VoiceUtility
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 
 class LeaveAction extends Action with Command {
