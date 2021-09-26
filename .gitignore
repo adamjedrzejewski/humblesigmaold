@@ -10,4 +10,9 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
+
+# old token file
 token.txt
+
+# don't leak you secrets
+config.json

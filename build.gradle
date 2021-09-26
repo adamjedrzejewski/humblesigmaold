@@ -16,7 +16,10 @@ repositories {
     }
 }
 
+
+
 dependencies {
     implementation 'org.scala-lang:scala-library:2.13.6'
     implementation 'net.dv8tion:JDA:4.3.0_277'
+    implementation group: 'org.json4s', name: 'json4s-native_2.13', version: '4.0.3'
 }

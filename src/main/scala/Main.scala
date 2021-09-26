@@ -4,6 +4,8 @@ import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.utils.cache.CacheFlag
 import net.dv8tion.jda.api.utils.{ChunkingFilter, MemberCachePolicy}
+import org.json4s._
+import org.json4s.native.Serialization.read
 
 import scala.io.Source
 import scala.util.{Failure, Success, Try, Using}
@@ -28,19 +30,25 @@ object Main {
     }.toMap
   }
 
-  // TODO: config file
   def main(args: Array[String]): Unit = {
-    val tokenFile = "token.txt"
+    val configFile = "config.json"
 
-    readToken(tokenFile) match {
+    readConfig(configFile) match {
       case Failure(s) =>
-        println(s"Failed to read token file: ${s.getMessage}")
+        println(s"Failed to read config file: ${s.getMessage}")
         System.exit(1)
 
-      case Success(token) =>
-        val jdaBuilder = getBuilder(token)
+      case Success(configuration) =>
+        val jdaBuilder = getBuilder(configuration)
         login(jdaBuilder)
+    }
 
+  }
+
+  private def readConfig(configFile: String) = {
+    implicit val formats: DefaultFormats.type = DefaultFormats
+    Using(Source.fromFile(configFile)) { source =>
+      read[Configuration](source.getLines().mkString)
     }
   }
 
@@ -48,15 +56,16 @@ object Main {
     jdaBuilder.build().awaitReady()
   }
 
-  def getBuilder(token: String): JDABuilder =
-    JDABuilder.createDefault(token)
+  def getBuilder(configuration: Configuration): JDABuilder = {
+    JDABuilder.createDefault(configuration.token)
       .disableCache(CacheFlag.ACTIVITY)
       .enableCache(CacheFlag.VOICE_STATE)
       .setMemberCachePolicy(MemberCachePolicy.VOICE.or(MemberCachePolicy.OWNER))
       .setChunkingFilter(ChunkingFilter.NONE)
       .setBulkDeleteSplittingEnabled(false)
       .setActivity(Activity.listening("Nightshift TV - D r i v e F o r e v e r"))
-      .addEventListeners(new EventDispatcher("::", commands))
+      .addEventListeners(new EventDispatcher(configuration.prompt, commands))
+  }
 
   def readToken(tokenFile: String): Try[String] = Using(Source.fromFile(tokenFile)) { source => source.getLines().mkString }
 

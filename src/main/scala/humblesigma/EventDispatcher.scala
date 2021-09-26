@@ -28,7 +28,7 @@ class EventDispatcher(prompt: String, commands: Map[String, BotAction]) extends 
       return
     }
 
-    val rawCommand = rawMessage.substring(2)
+    val rawCommand = rawMessage.substring(prompt.length)
     val (command, args) = parseCommand(rawCommand)
     commands.get(command.toLowerCase()) match {
       case Some(cmd) => cmd.handle(event, command, args)
