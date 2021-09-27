@@ -40,6 +40,7 @@ object Main {
       new SkipAction(),
       new QueueAction(),
       new ClearAction(),
+      new NowAction(),
       new ShutdownAction(configuration)
     )
 
