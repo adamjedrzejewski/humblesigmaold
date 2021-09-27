@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 
 class ShutdownAction(configuration: Configuration) extends Action with Command {
   override val names: List[String] = List("shutdown")
+  override val helpMessage: String = "shutdown bot (owner only)"
 
   // TODO: leave voice on shutdown
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {
@@ -25,6 +26,4 @@ class ShutdownAction(configuration: Configuration) extends Action with Command {
       textChannel.sendMessage("You are not the owner, only owner can use this command").queue()
     }
   }
-
-  override val helpMessage: String = "shutdown bot (owner only)"
 }

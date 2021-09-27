@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 class QueueAction extends Action with Command {
 
   override val names: List[String] = List("queue", "q")
+  override val helpMessage: String = "show playing queue"
 
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {
     val musicManager = PlayerManager.getMusicManager(event.getGuild)
@@ -35,6 +36,4 @@ class QueueAction extends Action with Command {
 
     action.queue()
   }
-
-  override val helpMessage: String = "show playing queue"
 }

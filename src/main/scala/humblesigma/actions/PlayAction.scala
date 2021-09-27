@@ -10,7 +10,9 @@ import java.net.{URI, URISyntaxException}
 
 class PlayAction extends Action with Command {
   override val names = List("play", "p")
+  override val helpMessage: String = "play music"
 
+  // TODO: age restricted videos are broken
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {
     val textChannel = event.getChannel
     val member: Member = event.getMember
@@ -31,16 +33,7 @@ class PlayAction extends Action with Command {
     }
   }
 
-  def isUrl(query: String): Boolean = {
-    try {
-      new URI(query)
-      true
-    } catch {
-      case _: URISyntaxException => false
-    }
-  }
-
-  private def playMusic(channel: TextChannel, query: String):Unit = {
+  private def playMusic(channel: TextChannel, query: String): Unit = {
     val link = if (isUrl(query)) {
       query
     } else {
@@ -50,5 +43,12 @@ class PlayAction extends Action with Command {
     PlayerManager.loadAndPlay(channel, link)
   }
 
-  override val helpMessage: String = "play music"
+  def isUrl(query: String): Boolean = {
+    try {
+      new URI(query)
+      true
+    } catch {
+      case _: URISyntaxException => false
+    }
+  }
 }

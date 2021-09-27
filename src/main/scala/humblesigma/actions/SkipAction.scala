@@ -1,4 +1,5 @@
 package humblesigma.actions
+
 import humblesigma.Command
 import humblesigma.voice.VoiceUtility
 import humblesigma.voice.music.PlayerManager
@@ -6,6 +7,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 
 class SkipAction extends Action with Command {
   override val names: List[String] = List("skip", "s")
+  override val helpMessage: String = "skip currently playing song"
 
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {
     val textChannel = event.getChannel
@@ -17,6 +19,4 @@ class SkipAction extends Action with Command {
       PlayerManager.skipSong(textChannel)
     }
   }
-
-  override val helpMessage: String = "skip currently playing song"
 }

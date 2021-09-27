@@ -7,9 +7,9 @@ object VoiceUtility {
   def joinChannel(guild: Guild, voiceChannel: VoiceChannel, textChannel: TextChannel): Boolean = {
     val selfVoiceState = guild.getSelfMember.getVoiceState
 
-//    if (selfVoiceState.inVoiceChannel()) {
-//      textChannel.sendMessage(s"I'm already in ${selfVoiceState.getChannel.getName} channel").queue()
-//    } else
+    //    if (selfVoiceState.inVoiceChannel()) {
+    //      textChannel.sendMessage(s"I'm already in ${selfVoiceState.getChannel.getName} channel").queue()
+    //    } else
     if (voiceChannel != null) {
       connectTo(voiceChannel)
       textChannel.sendMessage(s"Connected to ${voiceChannel.getName} channel").queue()

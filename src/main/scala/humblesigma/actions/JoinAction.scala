@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 
 class JoinAction extends Action with Command {
   override val names: List[String] = List("join")
+  override val helpMessage: String = "join voice channel"
 
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {
     val member = event.getMember
@@ -14,6 +15,4 @@ class JoinAction extends Action with Command {
 
     VoiceUtility.joinChannel(member.getGuild, voiceChannel, event.getChannel)
   }
-
-  override val helpMessage: String = "join voice channel"
 }

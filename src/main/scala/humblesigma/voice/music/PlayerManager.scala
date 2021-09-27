@@ -25,17 +25,17 @@ object PlayerManager {
     musicManager.scheduler.skipTrack()
   }
 
-  def clearPlayQueue(channel: TextChannel): Unit = {
-    val musicManager = getMusicManager(channel.getGuild)
-    musicManager.scheduler.clearQueue()
-  }
-
   def getMusicManager(guild: Guild): GuildMusicManager = {
     musicManagers.getOrElseUpdate(guild.getIdLong, {
       val guildManager = new GuildMusicManager(audioPlayerManager.createPlayer())
       guild.getAudioManager.setSendingHandler(guildManager.sendHandler)
       guildManager
     })
+  }
+
+  def clearPlayQueue(channel: TextChannel): Unit = {
+    val musicManager = getMusicManager(channel.getGuild)
+    musicManager.scheduler.clearQueue()
   }
 
 }
