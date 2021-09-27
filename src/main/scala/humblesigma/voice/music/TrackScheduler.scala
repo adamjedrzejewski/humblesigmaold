@@ -5,6 +5,7 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter
 import com.sedmelluq.discord.lavaplayer.track.{AudioTrack, AudioTrackEndReason}
 
 import java.util.concurrent.{BlockingQueue, LinkedBlockingQueue}
+import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
 class TrackScheduler(audioPlayer: AudioPlayer) extends AudioEventAdapter {
 
@@ -26,6 +27,8 @@ class TrackScheduler(audioPlayer: AudioPlayer) extends AudioEventAdapter {
     audioPlayer.stopTrack()
     nextTrack()
   }
+
+  def getQueuedTracks: List[AudioTrack] = queue.to(collection.immutable.List)
 
   def nextTrack(): Boolean = audioPlayer.startTrack(queue.poll(), false)
 

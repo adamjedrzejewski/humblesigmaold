@@ -38,6 +38,7 @@ object Main {
       new JoinAction(),
       new LeaveAction(),
       new SkipAction(),
+      new QueueAction(),
       new ShutdownAction(configuration)
     )
 
