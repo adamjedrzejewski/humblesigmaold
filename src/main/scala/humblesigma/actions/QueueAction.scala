@@ -19,7 +19,7 @@ class QueueAction extends Action with Command {
         .append(s"`${currentTrack.getInfo.title}`\n")
         .append('\n')
     } else {
-      channel.sendMessage("Not playing anything\n")
+      channel.sendMessage("Not playing anything\n\n")
     }
 
     action.append("Queue:\n")

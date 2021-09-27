@@ -39,6 +39,7 @@ object Main {
       new LeaveAction(),
       new SkipAction(),
       new QueueAction(),
+      new ClearAction(),
       new ShutdownAction(configuration)
     )
 

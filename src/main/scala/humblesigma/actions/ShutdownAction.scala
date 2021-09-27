@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 class ShutdownAction(configuration: Configuration) extends Action with Command {
   override val names: List[String] = List("shutdown")
 
+  // TODO: leave voice on shutdown
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {
     val textChannel = event.getChannel
     configuration.owner match {

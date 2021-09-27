@@ -9,7 +9,10 @@ import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
 class TrackScheduler(audioPlayer: AudioPlayer) extends AudioEventAdapter {
 
+
   private val queue: BlockingQueue[AudioTrack] = new LinkedBlockingQueue[AudioTrack]
+
+  def clearQueue(): Unit = queue.clear()
 
   def addTrackToQueue(track: AudioTrack): Unit = {
     if (!audioPlayer.startTrack(track, true)) {
@@ -28,8 +31,11 @@ class TrackScheduler(audioPlayer: AudioPlayer) extends AudioEventAdapter {
     nextTrack()
   }
 
-  def getQueuedTracks: List[AudioTrack] = queue.to(collection.immutable.List)
+  def nextTrack(): Boolean = {
+    audioPlayer.startTrack(queue.poll(), false)
+    // on play callback
+  }
 
-  def nextTrack(): Boolean = audioPlayer.startTrack(queue.poll(), false)
+  def getQueuedTracks: List[AudioTrack] = queue.to(collection.immutable.List)
 
 }

@@ -24,6 +24,7 @@ class PlayAction extends Action with Command {
         if (!selfVoiceState.inVoiceChannel()) {
           VoiceUtility.joinChannel(guild, voiceChannel, event.getChannel)
         }
+
         playMusic(textChannel, query)
 
       case None =>

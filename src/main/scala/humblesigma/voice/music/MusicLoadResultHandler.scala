@@ -11,10 +11,13 @@ class MusicLoadResultHandler(musicManager: GuildMusicManager, channel: TextChann
 
   override def playlistLoaded(playlist: AudioPlaylist): Unit = {
     val tracks = playlist.getTracks
-    if (tracks.isEmpty) {
-      channel.sendMessage("No search result").queue()
-    } else {
-      val track = tracks.get(0)
+//    if (tracks.isEmpty) {
+//      channel.sendMessage("No search result").queue()
+//    } else {
+//      val track = tracks.get(0)
+//      loadTrack(track)
+//    }
+    tracks.forEach { track =>
       loadTrack(track)
     }
   }
@@ -33,6 +36,9 @@ class MusicLoadResultHandler(musicManager: GuildMusicManager, channel: TextChann
     channel.sendMessage("No search result").queue()
   }
 
-  override def loadFailed(exception: FriendlyException): Unit = {}
+  override def loadFailed(exception: FriendlyException): Unit = {
+    println(exception.getMessage) // TODO: use logger
+    channel.sendMessage("Failed to load").queue()
+  }
 
 }
