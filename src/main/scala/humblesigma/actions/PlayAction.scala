@@ -21,11 +21,10 @@ class PlayAction extends Action with Command {
 
     args match {
       case Some(query) =>
-        if (!selfVoiceState.inVoiceChannel()) {
-          VoiceUtility.joinChannel(guild, voiceChannel, event.getChannel)
+        val joined = VoiceUtility.joinChannel(guild, voiceChannel, event.getChannel)
+        if (joined) {
+          playMusic(textChannel, query)
         }
-
-        playMusic(textChannel, query)
 
       case None =>
         textChannel.sendMessage("Provide a query to search.").queue()
@@ -39,7 +38,6 @@ class PlayAction extends Action with Command {
     } catch {
       case _: URISyntaxException => false
     }
-
   }
 
   private def playMusic(channel: TextChannel, query: String):Unit = {

@@ -7,22 +7,7 @@ import net.dv8tion.jda.api.entities.TextChannel
 
 class MusicLoadResultHandler(musicManager: GuildMusicManager, channel: TextChannel) extends AudioLoadResultHandler {
 
-  override def trackLoaded(track: AudioTrack): Unit = loadTrack(track)
-
-  override def playlistLoaded(playlist: AudioPlaylist): Unit = {
-    val tracks = playlist.getTracks
-//    if (tracks.isEmpty) {
-//      channel.sendMessage("No search result").queue()
-//    } else {
-//      val track = tracks.get(0)
-//      loadTrack(track)
-//    }
-    tracks.forEach { track =>
-      loadTrack(track)
-    }
-  }
-
-  private def loadTrack(track: AudioTrack): Unit = {
+  override def trackLoaded(track: AudioTrack): Unit = {
     musicManager.scheduler.addTrackToQueue(track)
     channel.sendMessage("Adding to queue `")
       .append(track.getInfo.title)
@@ -30,6 +15,22 @@ class MusicLoadResultHandler(musicManager: GuildMusicManager, channel: TextChann
       .append(track.getInfo.author)
       .append("`")
       .queue()
+  }
+
+  override def playlistLoaded(playlist: AudioPlaylist): Unit = {
+    val tracks = playlist.getTracks
+
+    if (playlist.isSearchResult) {
+      val track = tracks.get(0)
+      trackLoaded(track)
+    } else {
+      channel.sendMessage(s"Adding `${tracks.size}` tracks to queue")
+        .queue()
+
+      tracks.forEach { track =>
+        musicManager.scheduler.addTrackToQueue(track)
+      }
+    }
   }
 
   override def noMatches(): Unit = {
