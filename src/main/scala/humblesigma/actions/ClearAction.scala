@@ -13,5 +13,5 @@ class ClearAction extends Command with Action {
     PlayerManager.skipSong(channel)
   }
 
-  override val helpMessage: String = "`clear` - clear playing queue"
+  override val helpMessage: String = "clear playing queue"
 }

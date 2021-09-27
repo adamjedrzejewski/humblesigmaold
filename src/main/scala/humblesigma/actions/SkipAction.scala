@@ -18,5 +18,5 @@ class SkipAction extends Action with Command {
     }
   }
 
-  override val helpMessage: String = "`skip, s` - skip currently playing song"
+  override val helpMessage: String = "skip currently playing song"
 }

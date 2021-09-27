@@ -11,5 +11,5 @@ class PingAction extends Action with Command {
     event.getChannel.sendMessage("pong").queue()
   }
 
-  override val helpMessage: String = "`ping` - pong"
+  override val helpMessage: String = "pong"
 }

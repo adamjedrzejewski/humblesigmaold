@@ -15,5 +15,5 @@ class NowAction extends Command with Action {
       .queue()
   }
 
-  override val helpMessage: String = "`now` - show currently played song"
+  override val helpMessage: String = "show currently played song"
 }

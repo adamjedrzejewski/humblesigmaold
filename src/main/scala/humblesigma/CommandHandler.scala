@@ -56,7 +56,8 @@ class CommandHandler(prompt: String, commands: Map[String, Action with Command])
     action.append("Commands:\n")
 
     commands.values.toSet[Command].foreach { command =>
-      action.append(s"${command.helpMessage} \n")
+      val names = command.names.mkString(", ")
+      action.append(s"`$names` - ${command.helpMessage} \n")
     }
 
     action.queue()

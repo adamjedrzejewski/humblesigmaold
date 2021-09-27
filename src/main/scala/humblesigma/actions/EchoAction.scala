@@ -13,5 +13,5 @@ class EchoAction extends Action with Command {
       case None => ()
     }
 
-  override val helpMessage: String = "`echo` - text chat echo"
+  override val helpMessage: String = "text chat echo"
 }

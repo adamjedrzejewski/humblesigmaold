@@ -15,5 +15,5 @@ class JoinAction extends Action with Command {
     VoiceUtility.joinChannel(member.getGuild, voiceChannel, event.getChannel)
   }
 
-  override val helpMessage: String = "`join` - join voice channel"
+  override val helpMessage: String = "join voice channel"
 }
