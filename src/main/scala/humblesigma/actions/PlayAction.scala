@@ -3,8 +3,10 @@ package humblesigma.actions
 import humblesigma.Command
 import humblesigma.voice.VoiceUtility
 import humblesigma.voice.music.PlayerManager
-import net.dv8tion.jda.api.entities.Member
+import net.dv8tion.jda.api.entities.{Member, TextChannel}
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
+
+import java.net.{URI, URISyntaxException}
 
 class PlayAction extends Action with Command {
   override val names = List("play", "p")
@@ -18,14 +20,35 @@ class PlayAction extends Action with Command {
     val selfVoiceState = guild.getSelfMember.getVoiceState
 
     args match {
-      case Some(url) =>
+      case Some(query) =>
         if (!selfVoiceState.inVoiceChannel()) {
           VoiceUtility.joinChannel(guild, voiceChannel, event.getChannel)
         }
-        PlayerManager.loadAndPlay(textChannel, url)
+        playMusic(textChannel, query)
+
       case None =>
         textChannel.sendMessage("Provide a query to search.").queue()
     }
+  }
+
+  def isUrl(query: String): Boolean = {
+    try {
+      new URI(query)
+      true
+    } catch {
+      case _: URISyntaxException => false
+    }
+
+  }
+
+  private def playMusic(channel: TextChannel, query: String):Unit = {
+    val link = if (isUrl(query)) {
+      query
+    } else {
+      s"ytsearch:$query"
+    }
+
+    PlayerManager.loadAndPlay(channel, link)
   }
 
 

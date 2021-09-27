@@ -17,7 +17,15 @@ class MusicLoadResultHandler(musicManager: GuildMusicManager, channel: TextChann
       .queue()
   }
 
-  override def playlistLoaded(playlist: AudioPlaylist): Unit = {}
+  override def playlistLoaded(playlist: AudioPlaylist): Unit = {
+    val tracks = playlist.getTracks
+    if (tracks.isEmpty) {
+      channel.sendMessage("No search result").queue()
+    } else {
+      val track = tracks.get(0)
+      musicManager.scheduler.addTrackToQueue(track)
+    }
+  }
 
   override def noMatches(): Unit = {}
 
