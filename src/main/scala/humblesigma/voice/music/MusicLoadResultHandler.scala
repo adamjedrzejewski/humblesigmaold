@@ -29,7 +29,9 @@ class MusicLoadResultHandler(musicManager: GuildMusicManager, channel: TextChann
       .queue()
   }
 
-  override def noMatches(): Unit = {}
+  override def noMatches(): Unit = {
+    channel.sendMessage("No search result").queue()
+  }
 
   override def loadFailed(exception: FriendlyException): Unit = {}
 

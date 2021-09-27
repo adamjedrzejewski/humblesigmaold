@@ -14,15 +14,23 @@ class QueueAction extends Action with Command {
     val currentTrack = musicManager.audioPlayer.getPlayingTrack
     val channel = event.getChannel
 
-    val action = channel.sendMessage("Now playing: ")
-      .append(s"`${currentTrack.getInfo.title}`\n")
-      .append('\n')
+    val action = if (currentTrack != null) {
+      channel.sendMessage("Now playing: ")
+        .append(s"`${currentTrack.getInfo.title}`\n")
+        .append('\n')
+    } else {
+      channel.sendMessage("Not playing anything\n")
+    }
 
     action.append("Queue:\n")
-    list.zipWithIndex.foreach {
-      case (track, i) =>
-        val trackInfo = track.getInfo
-        action.append(s"`${i + 1}. ${trackInfo.title}`\n")
+    if (list.nonEmpty) {
+      list.zipWithIndex.foreach {
+        case (track, i) =>
+          val trackInfo = track.getInfo
+          action.append(s"`${i + 1}. ${trackInfo.title}`\n")
+      }
+    } else {
+      action.append("`empty`")
     }
 
     action.queue()
