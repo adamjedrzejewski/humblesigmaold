@@ -14,6 +14,12 @@ class CommandHandler(prompt: String, commands: Map[String, Action with Command])
   // TODO: add slash commands
   // override def onSlashCommand(event: SlashCommandEvent): Unit = { }
 
+  def noSuchCommand(channel: TextChannel, command: String): Unit = {
+    channel.sendMessage(s"No such command: `$command`\n")
+      .append(s"Type `${prompt}help` to show help")
+      .queue()
+  }
+
   def handleCommands(event: GuildMessageReceivedEvent): Unit = {
     val messageAuthor = event.getAuthor
     val botUser = event.getJDA.getSelfUser
@@ -38,7 +44,7 @@ class CommandHandler(prompt: String, commands: Map[String, Action with Command])
 
     commands.get(command.toLowerCase()) match {
       case Some(cmd) => cmd.handle(event, command, args)
-      case None => ()
+      case None => noSuchCommand(event.getChannel, command)
     }
   }
 
