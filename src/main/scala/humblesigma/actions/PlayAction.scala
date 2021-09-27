@@ -19,9 +19,12 @@ class PlayAction extends Action with Command {
 
     args match {
       case Some(url) =>
-        VoiceUtility.joinChannel (guild, voiceChannel, event.getChannel)
-        PlayerManager.loadAndPlay (textChannel, url)
-      case None => ()
+        if (!selfVoiceState.inVoiceChannel()) {
+          VoiceUtility.joinChannel(guild, voiceChannel, event.getChannel)
+        }
+        PlayerManager.loadAndPlay(textChannel, url)
+      case None =>
+        textChannel.sendMessage("Provide a query to search.").queue()
     }
   }
 

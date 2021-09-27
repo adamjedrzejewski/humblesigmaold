@@ -1,6 +1,7 @@
 package humblesigma.actions
 import humblesigma.Command
 import humblesigma.voice.VoiceUtility
+import humblesigma.voice.music.PlayerManager
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 
 class SkipAction extends Action with Command {
@@ -13,7 +14,7 @@ class SkipAction extends Action with Command {
     if (!inChannel) {
       textChannel.sendMessage(s"I'm not in any channel").queue()
     } else {
-      // skip song
+      PlayerManager.skipSong(textChannel)
     }
   }
 

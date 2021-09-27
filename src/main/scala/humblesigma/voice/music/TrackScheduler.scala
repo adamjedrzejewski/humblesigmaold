@@ -22,6 +22,11 @@ class TrackScheduler(audioPlayer: AudioPlayer) extends AudioEventAdapter {
     }
   }
 
+  def skipTrack(): Unit = {
+    audioPlayer.stopTrack()
+    nextTrack()
+  }
+
   def nextTrack(): Boolean = audioPlayer.startTrack(queue.poll(), false)
 
 }

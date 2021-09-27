@@ -37,6 +37,7 @@ object Main {
       new PlayAction(),
       new JoinAction(),
       new LeaveAction(),
+      new SkipAction(),
       new ShutdownAction(configuration)
     )
 
