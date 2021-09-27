@@ -37,7 +37,7 @@ class CommandHandler(prompt: String, commands: Map[String, Action]) extends List
   }
 
   def parseCommand(rawCommand: String): (String, Option[String]) = {
-    val elems = rawCommand.split("\\s+", 2)
+    val elems = rawCommand.split(raw"\s+", 2)
     val command = elems(0)
     val args = elems.size match {
       case 2 => Some(elems(1))
