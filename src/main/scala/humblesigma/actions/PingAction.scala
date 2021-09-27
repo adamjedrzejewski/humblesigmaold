@@ -8,7 +8,8 @@ class PingAction extends Action with Command {
   override final val names = List("ping")
 
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {
-    event.getChannel.sendMessage("Pong").queue()
+    event.getChannel.sendMessage("pong").queue()
   }
 
+  override val helpMessage: String = "`ping` - pong"
 }

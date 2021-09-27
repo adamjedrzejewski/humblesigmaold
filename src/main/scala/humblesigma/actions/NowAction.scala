@@ -14,4 +14,6 @@ class NowAction extends Command with Action {
       .append(s"`${currentTrackInfo.title}`")
       .queue()
   }
+
+  override val helpMessage: String = "`now` - show currently played song"
 }

@@ -1,5 +1,5 @@
 import humblesigma.actions._
-import humblesigma.{CommandHandler, Configuration}
+import humblesigma.{Command, CommandHandler, Configuration}
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.utils.cache.CacheFlag
@@ -29,10 +29,11 @@ object Main {
 
   }
 
-  def commands(configuration: Configuration): Map[String, Action] = {
+
+  def commands(configuration: Configuration): Map[String, Action with Command] = {
+
     val commands = List(
       new PingAction(),
-      new HelpAction(),
       new EchoAction(),
       new PlayAction(),
       new JoinAction(),
@@ -62,7 +63,7 @@ object Main {
     jdaBuilder.build().awaitReady()
   }
 
-  def getBuilder(configuration: Configuration, commands: Map[String, Action]): JDABuilder = {
+  def getBuilder(configuration: Configuration, commands: Map[String, Action with Command]): JDABuilder = {
     JDABuilder.createDefault(configuration.token)
       .disableCache(CacheFlag.ACTIVITY)
       .enableCache(CacheFlag.VOICE_STATE)

@@ -36,4 +36,5 @@ class QueueAction extends Action with Command {
     action.queue()
   }
 
+  override val helpMessage: String = "`queue, q` - show playing queue"
 }

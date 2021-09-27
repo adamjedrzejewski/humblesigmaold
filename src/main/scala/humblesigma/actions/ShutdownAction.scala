@@ -26,4 +26,5 @@ class ShutdownAction(configuration: Configuration) extends Action with Command {
     }
   }
 
+  override val helpMessage: String = "`shutdown` - shutdown bot (owner only)"
 }

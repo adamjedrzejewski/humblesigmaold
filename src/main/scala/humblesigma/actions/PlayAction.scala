@@ -52,5 +52,5 @@ class PlayAction extends Action with Command {
     PlayerManager.loadAndPlay(channel, link)
   }
 
-
+  override val helpMessage: String = "`play, p` - play music"
 }

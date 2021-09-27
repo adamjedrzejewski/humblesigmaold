@@ -11,4 +11,5 @@ class LeaveAction extends Action with Command {
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit
   = VoiceUtility.leaveChannel(event.getMember.getGuild, event.getChannel)
 
+  override val helpMessage: String = "`leave` - leave voice channel"
 }

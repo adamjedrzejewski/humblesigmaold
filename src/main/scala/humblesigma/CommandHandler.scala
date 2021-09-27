@@ -1,11 +1,11 @@
 package humblesigma
 
 import humblesigma.actions.Action
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent
+import net.dv8tion.jda.api.entities.TextChannel
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 
-class CommandHandler(prompt: String, commands: Map[String, Action]) extends ListenerAdapter {
+class CommandHandler(prompt: String, commands: Map[String, Action with Command]) extends ListenerAdapter {
 
   override def onGuildMessageReceived(event: GuildMessageReceivedEvent): Unit = {
     handleCommands(event)
@@ -30,10 +30,30 @@ class CommandHandler(prompt: String, commands: Map[String, Action]) extends List
 
     val rawCommand = rawMessage.substring(prompt.length)
     val (command, args) = parseCommand(rawCommand)
+
+    if (command == "help") {
+      printHelp(event.getChannel)
+      return
+    }
+
     commands.get(command.toLowerCase()) match {
       case Some(cmd) => cmd.handle(event, command, args)
       case None => ()
     }
+  }
+
+  def printHelp(channel: TextChannel): Unit = {
+    val action = channel.sendMessage("Help: \n")
+    action.append(s"My prompt is `$prompt`")
+    action.append("\n")
+    action.append("\n")
+    action.append("Commands:\n")
+
+    commands.values.toSet[Command].foreach { command =>
+      action.append(s"${command.helpMessage} \n")
+    }
+
+    action.queue()
   }
 
   def parseCommand(rawCommand: String): (String, Option[String]) = {
