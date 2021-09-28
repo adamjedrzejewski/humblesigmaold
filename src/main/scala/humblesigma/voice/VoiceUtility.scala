@@ -27,15 +27,19 @@ object VoiceUtility {
     audioManager.openAudioConnection(voiceChannel)
   }
 
-  def leaveChannel(guild: Guild, textChannel: TextChannel): Unit = {
+  def leaveChannel(guild: Guild, textChannel: TextChannel, verbose: Boolean): Unit = {
     val selfMember = guild.getSelfMember
     val selfVoiceState = selfMember.getVoiceState
 
     if (selfVoiceState.inVoiceChannel()) {
       guild.getAudioManager.closeAudioConnection()
-      textChannel.sendMessage(s"Leaving channel ${selfVoiceState.getChannel.getName}").queue()
+      if (verbose) {
+        textChannel.sendMessage(s"Leaving channel ${selfVoiceState.getChannel.getName}").queue()
+      }
     } else {
-      textChannel.sendMessage(s"I'm not connected to any channel").queue()
+      if (verbose) {
+        textChannel.sendMessage(s"I'm not connected to any channel").queue()
+      }
     }
   }
 

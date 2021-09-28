@@ -10,9 +10,14 @@ class NowAction extends Command with Action {
 
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {
     val musicManager = PlayerManager.getMusicManager(event.getGuild)
-    val currentTrackInfo = musicManager.audioPlayer.getPlayingTrack.getInfo
-    event.getChannel.sendMessage("Now playing: ")
-      .append(s"`${currentTrackInfo.title}`")
-      .queue()
+    val currentTrack = musicManager.audioPlayer.getPlayingTrack
+    if (currentTrack != null) {
+      event.getChannel.sendMessage("Now playing: ")
+        .append(s"`${currentTrack.getInfo.title}`")
+        .queue()
+    } else {
+      event.getChannel.sendMessage("Not playing anything right now")
+        .queue()
+    }
   }
 }
