@@ -12,7 +12,6 @@ class PlayAction extends Action with Command {
   override val names = List("play", "p")
   override val helpMessage: String = "play music"
 
-  // TODO: age restricted videos are broken
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {
     val textChannel = event.getChannel
     val member: Member = event.getMember
