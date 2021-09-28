@@ -1,5 +1,6 @@
 package humblesigma.actions
 
+import humblesigma.voice.VoiceUtility
 import humblesigma.{Command, Configuration}
 import net.dv8tion.jda.api.entities.TextChannel
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
@@ -19,6 +20,7 @@ class ShutdownAction(configuration: Configuration) extends Action with Command {
 
   private def perform(ownerId: String, user: String, textChannel: TextChannel): Unit = {
     if (ownerId == user) {
+      VoiceUtility.leaveChannel(textChannel.getGuild, textChannel)
       textChannel.sendMessage("Shutting down").queue()
       Thread.sleep(500)
       System.exit(0)
