@@ -31,7 +31,7 @@ class CommandHandler(prompt: String, commands: Map[String, Action with Command])
     val rawCommand = rawMessage.substring(prompt.length)
     val (command, args) = parseCommand(rawCommand)
 
-    if (command == "help") {
+    if (command.equalsIgnoreCase("help")) {
       printHelp(event.getChannel)
       return
     }

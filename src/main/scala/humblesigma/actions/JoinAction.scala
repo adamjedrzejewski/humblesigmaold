@@ -5,7 +5,7 @@ import humblesigma.voice.VoiceUtility
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 
 class JoinAction extends Action with Command {
-  override val names: List[String] = List("join")
+  override val names: List[String] = List("join", "j")
   override val helpMessage: String = "join voice channel"
 
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {

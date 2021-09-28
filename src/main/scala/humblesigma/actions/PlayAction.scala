@@ -10,7 +10,7 @@ import java.net.{URI, URISyntaxException}
 
 class PlayAction extends Action with Command {
   override val names = List("play", "p")
-  override val helpMessage: String = "play music"
+  override val helpMessage: String = "play music (youtube, soundcloud)"
 
   override def handle(event: GuildMessageReceivedEvent, command: String, args: Option[String]): Unit = {
     val textChannel = event.getChannel
