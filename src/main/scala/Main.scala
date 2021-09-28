@@ -33,8 +33,8 @@ object Main {
   def commands(configuration: Configuration): Map[String, Action with Command] = {
 
     val commands = List(
-      new PingAction(),
-      new EchoAction(),
+      //new PingAction(),
+      //new EchoAction(),
       new PlayAction(),
       new JoinAction(),
       new LeaveAction(),
@@ -70,7 +70,7 @@ object Main {
       .setMemberCachePolicy(MemberCachePolicy.VOICE.or(MemberCachePolicy.OWNER))
       .setChunkingFilter(ChunkingFilter.NONE)
       .setBulkDeleteSplittingEnabled(false)
-      .setActivity(Activity.listening("Nightshift TV - D r i v e F o r e v e r"))
+      .setActivity(Activity.listening(s"type ${configuration.prompt}help to show help"))
       .addEventListeners(new CommandHandler(configuration.prompt, commands))
   }
 
