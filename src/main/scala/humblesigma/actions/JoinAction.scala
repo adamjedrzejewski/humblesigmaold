@@ -13,6 +13,6 @@ class JoinAction extends Action with Command {
     val voiceState = member.getVoiceState
     val voiceChannel = voiceState.getChannel
 
-    VoiceUtility.joinChannel(member.getGuild, voiceChannel, event.getChannel)
+    VoiceUtility.joinChannel(member.getGuild, voiceChannel, event.getChannel, verbose = true)
   }
 }

@@ -22,7 +22,7 @@ class PlayAction extends Action with Command {
 
     args match {
       case Some(query) =>
-        val joined = selfVoiceState.inVoiceChannel() || VoiceUtility.joinChannel(guild, voiceChannel, event.getChannel)
+        val joined = selfVoiceState.inVoiceChannel() || VoiceUtility.joinChannel(guild, voiceChannel, event.getChannel, verbose = true)
         if (joined) {
           playMusic(textChannel, query)
         }

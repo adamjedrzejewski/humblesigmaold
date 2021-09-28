@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.entities.{Guild, Member, TextChannel, VoiceChannel}
 
 object VoiceUtility {
 
-  def joinChannel(guild: Guild, voiceChannel: VoiceChannel, textChannel: TextChannel): Boolean = {
+  def joinChannel(guild: Guild, voiceChannel: VoiceChannel, textChannel: TextChannel, verbose: Boolean): Boolean = {
     val selfVoiceState = guild.getSelfMember.getVoiceState
 
     //    if (selfVoiceState.inVoiceChannel()) {
@@ -12,10 +12,14 @@ object VoiceUtility {
     //    } else
     if (voiceChannel != null) {
       connectTo(voiceChannel)
-      textChannel.sendMessage(s"Connected to ${voiceChannel.getName} channel").queue()
+      if (verbose) {
+        textChannel.sendMessage(s"Connected to ${voiceChannel.getName} channel").queue()
+      }
       true
     } else {
-      textChannel.sendMessage(s"You aren't connected to any channel").queue()
+      if (verbose) {
+        textChannel.sendMessage(s"You aren't connected to any channel").queue()
+      }
       false
     }
   }
