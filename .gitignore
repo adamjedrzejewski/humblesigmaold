@@ -16,3 +16,6 @@ token.txt
 
 # don't leak you secrets
 config.json
+
+# libraries
+libs
