@@ -5,18 +5,12 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.{AudioPlaylist, AudioTrack}
 import net.dv8tion.jda.api.entities.TextChannel
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 class MusicLoadResultHandler(musicManager: GuildMusicManager, channel: TextChannel) extends AudioLoadResultHandler {
 
-  private val playlistMaxSize = 25
-
   override def playlistLoaded(playlist: AudioPlaylist): Unit = {
-    if (playlist.getTracks.size() > playlistMaxSize) {
-      channel.sendMessage(s"Playlist longer than max, adding first $playlistMaxSize elements").queue()
-    }
-
-    val tracks = playlist.getTracks.asScala.toList.take(playlistMaxSize)
+    val tracks = playlist.getTracks.asScala.toList
 
     if (playlist.isSearchResult) {
       val track = tracks.head
